@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Valentine, Syifa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #0b0413;
+      --bg-soft: #1b0b30;
+      --accent: #9c5cff;
+      --accent-soft: #b084ff33;
+      --accent-strong: #e0c3ff;
+      --text-main: #f7f2ff;
+      --text-muted: #c2b4e3;
+      --card-radius: 18px;
+      --transition-fast: 180ms ease-out;
+      --transition-slow: 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, #3b1767 0, transparent 50%),
+        radial-gradient(circle at bottom right, #2f0c4e 0, transparent 50%),
+        var(--bg);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      inset: -20px;
+      opacity: 0.08;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+      z-index: 0;
+    }
+
+    .glow-orb {
+      position: fixed;
+      width: 380px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      background: radial-gradient(circle, #c38dff 0, #7b3fff 35%, transparent 70%);
+      opacity: 0.17;
+      filter: blur(4px);
+      z-index: 0;
+      animation: floatOrb 20s infinite alternate ease-in-out;
+    }
+    .glow-orb.orb-right {
+      top: -60px;
+      right: -40px;
+      animation-delay: -5s;
+    }
+    .glow-orb.orb-left {
+      bottom: -120px;
+      left: -20px;
+    }
+
+    @keyframes floatOrb {
+      from { transform: translate3d(0, 0, 0) scale(1); }
+      to { transform: translate3d(-24px, -18px, 0) scale(1.05); }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      width: 100%;
+      background: radial-gradient(circle at top, #2b154b 0, #13071f 45%, #0b0413 100%);
+      border-radius: var(--card-radius);
+      padding: 26px 26px 28px;
+      box-shadow:
+        0 28px 80px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(188, 154, 255, 0.12);
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 26px;
+      backdrop-filter: blur(22px) saturate(120%);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      animation: cardIn 900ms var(--transition-slow);
+      transform-origin: center bottom;
+    }
+
+    @media (max-width: 720px) {
+      .card {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 22px 18px 22px;
+      }
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.97);
+        filter: blur(3px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: calc(var(--card-radius) - 1px);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.035), transparent 32%, rgba(188, 154, 255, 0.07));
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    .card-inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: subgrid;
+      grid-column: 1 / -1;
+      gap: inherit;
+      z-index: 1;
+    }
+
+    .tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(68, 31, 121, 0.7);
+      border: 1px solid rgba(182, 142, 255, 0.4);
+      color: var(--accent-strong);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      backdrop-filter: blur(12px);
+    }
+
+    .tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #f8d8ff 0, #b579ff 45%, #4d1ca6 100%);
+      box-shadow: 0 0 12px rgba(234, 198, 255, 0.8);
+    }
+
+    h1 {
+      font-size: clamp(26px, 4vw, 32px);
+      line-height: 1.18;
+      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+    }
+
+    h1 span.accent {
+      background: linear-gradient(120deg, #f3d9ff, #d6b3ff, #f6e7ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      white-space: nowrap;
+    }
+
+    .subtitle {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 24rem;
+    }
+
+    .divider {
+      width: 36px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(159, 107, 255, 0), rgba(220, 193, 255, 0.9), rgba(159, 107, 255, 0));
+      margin: 8px 0 16px;
+      opacity: 0.9;
+    }
+
+    .message {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-main);
+      opacity: 0.96;
+    }
+
+    .message span.name {
+      color: var(--accent-strong);
+      font-weight: 600;
+    }
+
+    .quote-block {
+      margin-top: 16px;
+      padding: 12px 13px;
+      border-radius: 12px;
+      border: 1px solid rgba(182, 142, 255, 0.35);
+      background: radial-gradient(circle at top left, rgba(111, 65, 207, 0.42), rgba(18, 7, 31, 0.3));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-block::before {
+      content: "❝";
+      position: absolute;
+      font-size: 50px;
+      color: rgba(249, 233, 255, 0.06);
+      top: -18px;
+      left: 6px;
+      pointer-events: none;
+    }
+
+    .quote-text {
+      font-size: 13px;
+      color: #f7edff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .quote-author {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      text-align: right;
+      position: relative;
+      z-index: 1;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      position: relative;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 13px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      color: #fdf9ff;
+      background: linear-gradient(135deg, #9a5bff, #c290ff);
+      box-shadow:
+        0 10px 28px rgba(23, 0, 68, 0.7),
+        0 0 0 1px rgba(238, 212, 255, 0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-slow),
+        border-color var(--transition-fast),
+        color var(--transition-fast);
+    }
+
+    .btn span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #f7ebff;
+      box-shadow: 0 0 7px rgba(248, 235, 255, 0.9);
+    }
+
+    .btn.secondary {
+      background: rgba(23, 7, 49, 0.8);
+      border-color: rgba(162, 126, 235, 0.7);
+      color: var(--accent-strong);
+      box-shadow: 0 10px 24px rgba(5, 0, 20, 0.9);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 18px 40px rgba(26, 5, 72, 0.95),
+        0 0 0 1px rgba(243, 222, 255, 0.2);
+    }
+
+    .btn.secondary:hover {
+      background: radial-gradient(circle at top left, rgba(153, 102, 255, 0.4), rgba(8, 2, 20, 0.95));
+      border-color: rgba(230, 205, 255, 0.9);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow:
+        0 10px 26px rgba(10, 0, 28, 0.9),
+        0 0 0 1px rgba(238, 212, 255, 0.4);
+    }
+
+    .meta-note {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      opacity: 0.9;
+    }
+
+    .meta-note span {
+      color: var(--accent-strong);
+    }
+
+    .envelope-wrapper {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .envelope {
+      position: relative;
+      width: 220px;
+      height: 140px;
+      border-radius: 18px;
+      border: 1px solid rgba(210, 184, 255, 0.65);
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.2), transparent 55%),
+                  radial-gradient(circle at 100% 100%, rgba(174, 137, 255, 0.4), rgba(39, 10, 89, 0.9));
+      box-shadow:
+        0 16px 40px rgba(5, 0, 25, 0.9),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition:
+        transform 480ms cubic-bezier(0.2, 0.7, 0.25, 1.05),
+        box-shadow 320ms ease-out;
+      padding: 0;
+    }
+
+    .envelope:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow:
+        0 22px 52px rgba(10, 0, 36, 0.98),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .envelope:active {
+      transform: translateY(-1px) scale(1.0);
+      box-shadow:
+        0 14px 32px rgba(5, 0, 25, 0.95),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .envelope-flap {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(246, 230, 255, 0.95), rgba(198, 154, 255, 0.95));
+      clip-path: polygon(0 0, 100% 0, 50% 60%);
+      transform-origin: top center;
+      transform: rotateX(0deg);
+      transform-style: preserve-3d;
+      transition: transform 620ms cubic-bezier(0.19, 0.75, 0.3, 1.12);
+      box-shadow: 0 6px 18px rgba(53, 15, 107, 0.75);
+      z-index: 2;
+    }
+
+    .envelope-body {
+      position: absolute;
+      inset: 24px 10px 10px 10px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 0 0, rgba(250, 238, 255, 0.3), transparent 70%),
+                  linear-gradient(145deg, #3a1a6b, #1d0b36);
+      box-shadow:
+        inset 0 0 0 1px rgba(249, 236, 255, 0.16),
+        0 8px 18px rgba(0, 0, 0, 0.7);
+      z-index: 1;
+    }
+
+    .envelope-letter {
+      position: absolute;
+      left: 13%;
+      right: 13%;
+      bottom: 8%;
+      height: 70%;
+      border-radius: 10px;
+      background: #faf3ff;
+      color: #302039;
+      box-shadow:
+        0 10px 22px rgba(38, 4, 76, 0.65),
+        inset 0 0 0 1px rgba(187, 147, 244, 0.6);
+      padding: 10px 12px;
+      font-size: 11.5px;
+      line-height: 1.6;
+      transform: translateY(42%) scale(0.96);
+      opacity: 0;
+      transform-origin: bottom center;
+      transition:
+        transform 580ms var(--transition-slow),
+        opacity 580ms var(--transition-slow);
+      z-index: 0;
+    }
+
+    .envelope.opened .envelope-flap {
+      transform: rotateX(-178deg);
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+
+    .envelope.opened .envelope-letter {
+      transform: translateY(-6%) scale(1);
+      opacity: 1;
+    }
+
+    .letter-title {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #7e53c7;
+      margin-bottom: 4px;
+    }
+
+    .letter-preview {
+      font-size: 11.5px;
+      color: #3b264f;
+      margin-bottom: 4px;
+    }
+
+    .letter-hint {
+      font-size: 10.5px;
+      color: #8a6cad;
+    }
+
+    .envelope-note {
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    .side-panel {
+      position: relative;
+      padding: 16px 14px 14px;
+      border-radius: 16px;
+      background: radial-gradient(circle at top, rgba(220, 184, 255, 0.18), rgba(25, 7, 52, 0.8));
+      border: 1px solid rgba(196, 164, 255, 0.55);
+      box-shadow: 0 18px 42px rgba(6, 0, 22, 0.9);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transform-origin: right center;
+      animation: sideIn 950ms var(--transition-slow) 40ms backwards;
+    }
+
+    @media (max-width: 720px) {
+      .side-panel {
+        order: -1;
+        margin-bottom: 4px;
+      }
+    }
+
+    @keyframes sideIn {
+      from {
+        opacity: 0;
+        transform: translateX(16px) scale(0.97);
+        filter: blur(2px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .side-panel::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0, rgba(255, 255, 255, 0.09), transparent 70%),
+        radial-gradient(circle at 80% 100%, rgba(210, 164, 255, 0.32), transparent 60%);
+      mix-blend-mode: soft-light;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .book {
+      position: relative;
+      border-radius: 14px;
+      background: linear-gradient(145deg, #2b1650, #140722);
+      border: 1px solid rgba(204, 173, 255, 0.6);
+      padding: 12px 12px 10px;
+      box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.5),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .bookmark {
+      position: absolute;
+      top: -4px;
+      right: 18px;
+      width: 12px;
+      height: 34px;
+      background: linear-gradient(180deg, #e2c7ff, #b988ff);
+      clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+      box-shadow: 0 4px 12px rgba(37, 0, 84, 0.85);
+    }
+
+    .spine {
+      width: 5px;
+      border-radius: 6px;
+      background: linear-gradient(180deg, #3a1a7a, #7b4dff);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 0 0 1px rgba(0, 0, 0, 0.7);
+    }
+
+    .book-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .book-title {
+      font-size: 13px;
+      color: #f5e6ff;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .book-sub {
+      font-size: 11px;
+      color: rgba(230, 212, 255, 0.88);
+    }
+
+    .book-line {
+      margin-top: 8px;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(227, 203, 255, 0.6), transparent);
+      opacity: 0.8;
+    }
+
+    .hyacinth {
+      position: relative;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hyacinth-icon {
+      width: 32px;
+      height: 52px;
+      position: relative;
+      filter: drop-shadow(0 4px 9px rgba(0, 0, 0, 0.9));
+      animation: floatStem 4.6s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+    }
+
+    @keyframes floatStem {
+      0%   { transform: translateY(0) rotate(-1deg); }
+      50%  { transform: translateY(-3px) rotate(1.2deg); }
+      100% { transform: translateY(0) rotate(-0.6deg); }
+    }
+
+    .hyacinth-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .hyacinth-text {
+      font-size: 12px;
+      color: var(--text-main);
+      opacity: 0.95;
+    }
+
+    .hyacinth-text span {
+      color: var(--accent-strong);
+      font-weight: 500;
+    }
+
+    .footer-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .stats {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 11px;
+      color: rgba(238, 223, 255, 0.9);
+    }
+
+    .stat-pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(216, 189, 255, 0.6);
+      background: rgba(37, 11, 83, 0.9);
+      backdrop-filter: blur(8px);
+    }
+
+    .toggle-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .toggle-text button {
+      background: none;
+      border: none;
+      color: var(--accent-strong);
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    .panel-hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 380ms var(--transition-slow);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+        filter: blur(2px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.page-active {
+      display: block;
+    }
+
+    .hidden-message {
+      margin-top: 14px;
+      padding: 10px 11px;
+      border-radius: 10px;
+      border: 1px dashed rgba(206, 183, 255, 0.55);
+      background: rgba(13, 3, 32, 0.72);
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #f5ecff;
+    }
+
+    .hidden-message strong {
+      color: var(--accent-strong);
+    }
+
+    .heart-pulse {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #ffe3f5, #ff9cd2);
+      margin-right: 4px;
+      animation: heartBeat 1.4s ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(255, 160, 210, 0.8);
+      font-size: 11px;
+      color: #5a1144;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(0.88); opacity: 0.8; }
+      50%      { transform: scale(1.08); opacity: 1; }
+    }
+
+    .floating-petals {
+      position: fixed;
+      pointer-events: none;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .petal {
+      position: absolute;
+      width: 10px;
+      height: 18px;
+      border-radius: 50% 50% 50% 50%;
+      background: radial-gradient(circle at 30% 20%, #ffe9ff, #e5b5ff 50%, #a770ff 100%);
+      opacity: 0.26;
+      filter: blur(0.3px);
+      animation: fall 14s linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translate3d(0, -10vh, 0) rotateZ(0deg);
+      }
+      100% {
+        transform: translate3d(-20px, 110vh, 0) rotateZ(120deg);
+      }
+    }
+
+    .chapter-tabs {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chapter-tab {
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(204, 177, 255, 0.7);
+      background: rgba(21, 6, 52, 0.9);
+      color: var(--accent-strong);
+      font-size: 11px;
+      cursor: pointer;
+      transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        color var(--transition-fast);
+    }
+
+    .chapter-tab:hover {
+      transform: translateY(-1px);
+      background: radial-gradient(circle at top left, rgba(165, 123, 255, 0.48), rgba(15, 3, 40, 0.95));
+      border-color: rgba(238, 217, 255, 0.95);
+      color: #fdf8ff;
+    }
+
+    .chapter-tab.active {
+      background: linear-gradient(135deg, #a166ff, #d0acff);
+      color: #281034;
+      border-color: rgba(252, 243, 255, 0.95);
+      box-shadow: 0 10px 24px rgba(16, 0, 46, 0.9);
+    }
+
+    .chapter {
+      display: none;
+      margin-top: 16px;
+    }
+
+    .chapter.chapter-active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="glow-orb orb-right"></div>
+  <div class="glow-orb orb-left"></div>
+  <div class="floating-petals" id="petals"></div>
+
+  <main class="card" aria-label="Valentine message for Syifa">
+    <div class="card-inner">
+      <section class="page page-active" data-page="1" aria-label="Valentine intro">
+        <div class="tagline">
+          <span class="tag-dot"></span>
+          <span>Dear new reader in this small story</span>
+        </div>
+
+        <h1>
+          Happy Valentine, <span class="accent">Khadijah Agrita Mardiasyfa (Syifa)</span>
+        </h1>
+
+        <p class="subtitle">
+          Kita baru kenal beberapa waktu lalu, tapi rasanya tetap pengen say hi dengan benar — lewat satu amplop kecil, sedikit sabar, dan satu klik pelan.
+        </p>
+
+        <div class="divider"></div>
+
+        <div class="envelope-wrapper">
+          <button class="envelope" id="envelope" type="button" aria-label="Open a small Valentine note for Syifa">
+            <div class="envelope-flap"></div>
+            <div class="envelope-body"></div>
+            <div class="envelope-letter">
+              <div class="letter-title">To: Syifa</div>
+              <div class="letter-preview">
+                Di dalam amplop ini ada beberapa catatan pendek tentang kamu, buku, dan 3 November — dari seorang teman yang sekadar seneng bisa kenal kamu.
+              </div>
+              <div class="letter-hint">
+                Tap amplopnya pelan-pelan — cuma ucapan Valentine yang ringan, nggak perlu dipikirin terlalu jauh.
+              </div>
+            </div>
+          </button>
+        </div>
+
+        <p class="meta-note envelope-note">
+          This page was written for <span>Syifa</span>, teman yang baru dikenal tanggal 3 November — dan cuma diam di sini, nunggu kamu sempat buka.
+        </p>
+
+        <div class="buttons">
+          <button class="btn secondary" id="btnChangeMood">
+            for a different mood
+          </button>
+        </div>
+      </section>
+
+      <section class="page" data-page="2" aria-label="Letter page">
+        <div class="tagline">
+          <span class="tag-dot"></span>
+          <span>A small letter, told in chapters</span>
+        </div>
+
+        <div class="chapter-tabs" aria-label="Letter chapters">
+          <button class="chapter-tab active" data-chapter="1">Chapter I · First impressions</button>
+          <button class="chapter-tab" data-chapter="2">Chapter II · Books & purple</button>
+          <button class="chapter-tab" data-chapter="3">Chapter III · Small wishes</button>
+        </div>
+
+        <div class="chapter chapter-active" data-chapter="1">
+          <p class="message">
+            <span class="heart-pulse">❤</span>
+            <strong>Dear Syifa,</strong><br />
+            Sejak pertama kali kita benar-benar kenalan tanggal 3 November kemarin, aku ngerasa kamu itu tipe orang yang enak diajak ngobrol pelan-pelan, tapi tetap nyambung.
+            Surat kecil ini cuma cara sederhana buat bilang: seneng bisa ketemu dan mulai ngobrol sama kamu, tanpa maksud apa-apa di baliknya.
+          </p>
+          <p class="message">
+            In short, I’m simply grateful that our paths crossed and that our conversations, no matter how short, feel calm and genuine.
+          </p>
+        </div>
+
+        <div class="chapter" data-chapter="2">
+          <p class="message">
+            Dari obrolan singkat soal buku dan hal-hal kecil yang kamu suka, aku pelan-pelan ngeh kalau kamu punya cara sendiri buat menikmati dunia:
+            dari luar kelihatan tenang, tapi matanya kelihatan hidup kalau lagi bahas sesuatu yang bikin kamu penasaran.
+          </p>
+          <div class="divider"></div>
+          <p class="message">
+            Kalau hidupmu suatu hari nanti serasa novel panjang, semoga tiap babnya ketemu orang-orang baik, cerita yang seru, dan banyak sudut baca
+            senyaman warna ungu yang kamu suka. Dari jauh, aku cuma bisa pelan-pelan ikut doain itu semua kejadian, sebagai teman yang mungkin cuma muncul di beberapa halaman awal.
+          </p>
+        </div>
+
+        <div class="chapter" data-chapter="3">
+          <p class="message">
+            Buat sekarang, aku cuma berharap hari-harimu jalan dengan ringan: tugas beres, bacaan seru ketemu di waktu yang pas, dan kamu tetap punya ruang
+            buat jadi diri sendiri tanpa harus buru-buru. Kalau suatu saat dunia berasa terlalu ramai, anggap halaman ini sebagai pengingat kecil dari seorang teman
+            yang lagi belajar kenal kamu pelan-pelan.
+          </p>
+          <div class="divider"></div>
+          <p class="message">
+            Kalau dipikir-pikir, kita baru kenal sebentar dan obrolan kita juga belum sejauh itu, jadi wajar kalau surat kecil ini masih sederhana dulu.
+            Cara kamu balas chat yang nggak selalu instan justru bikin ritmenya enak: nggak terlalu cepat, nggak menuntut, tapi cukup buat ngingetin kalau di luar
+            semua urusan dan keribetan dunia, ada seseorang yang sesekali nyapa dan bikin pikiranku nggak melulu lari ke hal-hal berat.
+          </p>
+          <div class="divider"></div>
+          <p class="message">
+            Happy Valentine, Syifa. Makasih buat obrolan singkat dan cerita-cerita kecil sejauh ini — semoga halaman-halaman berikutnya di hidupmu diisi banyak hal baik
+            yang pelan-pelan bikin kamu bangga sama diri sendiri.
+          </p>
+          <p class="message">
+            Wherever your story goes next, I hope it stays kind to you — with soft mornings, good books, and people who make you feel quietly at home.
+          </p>
+        </div>
+
+        <div class="buttons">
+          <button class="btn secondary" id="btnBackToStart">
+            back to first page
+          </button>
+        </div>
+      </section>
+
+      <aside class="side-panel" aria-label="Book & flower panel">
+        <div class="book">
+          <div class="bookmark"></div>
+          <div class="spine"></div>
+          <div class="book-content">
+            <div class="book-title">VALENTINE EDITION</div>
+            <div class="book-sub">“On the page where we met · 3 Nov.”</div>
+            <div class="book-line"></div>
+
+            <div class="hyacinth">
+              <div class="hyacinth-icon" aria-hidden="true">
+                <!-- Simple hyacinth-style flower (stylized) -->
+                <svg viewBox="0 0 60 110" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="stemGrad" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0%" stop-color="#6ed7a4" />
+                      <stop offset="100%" stop-color="#1e7a4b" />
+                    </linearGradient>
+                    <radialGradient id="petalGrad" cx="30%" cy="20%" r="80%">
+                      <stop offset="0%" stop-color="#fff5ff" />
+                      <stop offset="45%" stop-color="#e5b4ff" />
+                      <stop offset="100%" stop-color="#9a63ff" />
+                    </radialGradient>
+                  </defs>
+
+                  <g transform="translate(30,100)">
+                    <path d="M0 0 C -4 -20 -5 -45 -4 -70" stroke="url(#stemGrad)" stroke-width="4.5" stroke-linecap="round" fill="none" />
+                    <path d="M -6 -30 Q -16 -32 -20 -44" stroke="url(#stemGrad)" stroke-width="3" stroke-linecap="round" fill="none" />
+                    <path d="M 4 -35 Q 12 -39 16 -51" stroke="url(#stemGrad)" stroke-width="3" stroke-linecap="round" fill="none" />
+                  </g>
+
+                  <g transform="translate(30,30)" fill="url(#petalGrad)" opacity="0.95">
+                    <ellipse cx="-7" cy="5" rx="6" ry="10" />
+                    <ellipse cx="7" cy="5" rx="6" ry="10" />
+                    <ellipse cx="0" cy="-3" rx="6" ry="10" />
+                    <ellipse cx="-5" cy="-12" rx="6" ry="10" />
+                    <ellipse cx="6" cy="-12" rx="6" ry="10" />
+                    <ellipse cx="-6" cy="-22" rx="6" ry="10" />
+                    <ellipse cx="4" cy="-22" rx="6" ry="10" />
+                    <ellipse cx="-1" cy="-32" rx="6" ry="10" />
+                  </g>
+
+                  <circle cx="30" cy="30" r="2" fill="#fdf4ff" opacity="0.9" />
+                  <circle cx="25" cy="18" r="2" fill="#fdf4ff" opacity="0.9" />
+                  <circle cx="35" cy="12" r="2" fill="#fdf4ff" opacity="0.9" />
+                </svg>
+              </div>
+              <div class="hyacinth-text">
+                Inspired by <span>Hyacinthus</span> — flower of remembrance and quiet devotion.
+                Kalau inget kamu, rasanya nuansa ungu yang tenang langsung kebayang.
+                <div class="footer-note">
+                  Not loud, not overdramatic. Just softly there, staying.
+                </div>
+              </div>
+            </div>
+
+            <div class="stats">
+              <span class="stat-pill">Mood: calm & sincere</span>
+              <span class="stat-pill">Palette: soft purple</span>
+              <span class="stat-pill">Reader: Syifa</span>
+            </div>
+
+            <div class="toggle-text">
+              This story has a few quiet chapters. Take your time with each one.
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const pages = document.querySelectorAll(".page");
+    const envelope = document.getElementById("envelope");
+    const btnBackToStart = document.getElementById("btnBackToStart");
+    const btnChangeMood = document.getElementById("btnChangeMood");
+    const chapterTabs = document.querySelectorAll(".chapter-tab");
+    const chapters = document.querySelectorAll(".chapter");
+
+    let isDarkMode = true;
+    let currentPage = 1;
+
+    function showPage(pageNumber) {
+      pages.forEach((page) => {
+        const p = Number(page.dataset.page);
+        if (p === pageNumber) {
+          page.classList.remove("fade-in");
+          void page.offsetWidth;
+          page.classList.add("page-active", "fade-in");
+        } else {
+          page.classList.remove("page-active", "fade-in");
+        }
+      });
+      currentPage = pageNumber;
+    }
+
+    function showChapter(chapterNumber) {
+      chapters.forEach((chapter) => {
+        const c = Number(chapter.dataset.chapter);
+        if (c === chapterNumber) {
+          chapter.classList.remove("fade-in");
+          void chapter.offsetWidth;
+          chapter.classList.add("chapter-active", "fade-in");
+        } else {
+          chapter.classList.remove("chapter-active", "fade-in");
+        }
+      });
+
+      chapterTabs.forEach((tab) => {
+        const t = Number(tab.dataset.chapter);
+        tab.classList.toggle("active", t === chapterNumber);
+      });
+    }
+
+    if (envelope) {
+      envelope.addEventListener("click", () => {
+        envelope.classList.add("opened");
+        setTimeout(() => {
+          showPage(2);
+        }, 1100);
+      });
+    }
+
+    if (btnBackToStart) {
+      btnBackToStart.addEventListener("click", () => {
+        showPage(1);
+      });
+    }
+
+    chapterTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const chapterNumber = Number(tab.dataset.chapter);
+        showChapter(chapterNumber);
+      });
+    });
+
+    btnChangeMood.addEventListener("click", () => {
+      isDarkMode = !isDarkMode;
+      const body = document.body;
+
+      if (!isDarkMode) {
+        body.style.background =
+          "radial-gradient(circle at top left, #ffedf9 0, transparent 55%), " +
+          "radial-gradient(circle at bottom right, #e0d3ff 0, transparent 55%), " +
+          "#f8f3ff";
+        body.style.color = "#221433";
+        btnChangeMood.textContent = "bring back the night sky";
+      } else {
+        body.style.background =
+          "radial-gradient(circle at top left, #3b1767 0, transparent 50%), " +
+          "radial-gradient(circle at bottom right, #2f0c4e 0, transparent 50%), " +
+          "#0b0413";
+        body.style.color = "var(--text-main)";
+        btnChangeMood.textContent = "for a different mood";
+      }
+    });
+
+    const petalsContainer = document.getElementById("petals");
+    const PETAL_COUNT = 16;
+
+    function createPetal(index) {
+      const petal = document.createElement("div");
+      petal.className = "petal";
+      const startLeft = Math.random() * 100;
+      const delay = Math.random() * -14;
+      const dur = 12 + Math.random() * 6;
+      const scale = 0.7 + Math.random() * 0.7;
+
+      petal.style.left = startLeft + "vw";
+      petal.style.animationDelay = delay + "s";
+      petal.style.animationDuration = dur + "s";
+      petal.style.transform = "scale(" + scale.toFixed(2) + ")";
+      petal.style.borderRadius = "60% 40% 60% 40%";
+
+      petalsContainer.appendChild(petal);
+    }
+
+    for (let i = 0; i < PETAL_COUNT; i++) {
+      createPetal(i);
+    }
+
+    // initial state
+    showPage(currentPage);
+    showChapter(1);
+  </script>
+</body>
+</html>
